@@ -1,12 +1,47 @@
+/* NORMALIZER */
+
+
+/* STYLE FOR EMPLOYEE LIST COMPONENT */
+.employee-list {
+  width: 50%;
+  margin: auto;
+  padding: 0;
+}
+
+/* STYLE FOR EMPLOYEE LIST ITEM COMPONENT */
+.employee-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f4f3f6;
+}
+
+.employee-details {
+  display: flex;
+  text-align: left;
+  align-items: center;
+}
+
 .employee-name {
   color: #88bde4;
 }
 
 .employee-avatar {
   width: 30px;
+  height: 30px;
   border-radius: 50%;
+  margin: 0 20px;
 }
 
 .employee-address {
 
+}
+
+/* STYLE FOR BUTTON COMPONENT  */
+.button-component {
+  display: flex;
+}
+.button-icon {
+  width: 30px;
+  height: 30px;
 }

@@ -7,11 +7,15 @@ class EmployeeListItem extends Component {
     const { name, pic, address } = this.props.employee;
 
     return (
-      <div>
-        <img src={require('../img/' + pic)} className={"employee-avatar"} />
-        <h1 className={"employee-name"}>{name}</h1>
-        <p className={"employee-address"}>{address}</p>
-        <Button>Click</Button>
+      <div className={"employee-list-item"}>
+        <div className={"employee-details"}>
+          <img src={require('../img/' + pic)} className={"employee-avatar"} />
+          <div>
+            <p className={"employee-name"}>{name}</p>
+            <p className={"employee-address"}>{address}</p>
+          </div>
+        </div>
+        <Button className={"employee-actions"} active={true} />
       </div>
     )
   }

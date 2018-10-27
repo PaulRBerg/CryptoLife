@@ -6,7 +6,7 @@ import Employees from '../mockData.js'
 class EmployeeList extends Component {
   render () {
     return (
-      <ul>
+      <ul className={"employee-list"}>
           {Employees.map(function(employee, index){
               return <EmployeeListItem key={index}
                                        employee={employee}

@@ -5,7 +5,11 @@ import EmployeeList from './EmployeeList'
 class Dashboard extends Component {
   render () {
     return (
-      <EmployeeList />
+      <div>
+        <h1>Employee List>
+        <img src={require("search.png")} />
+        <EmployeeList />
+      </div>
     )
   }
 }
