@@ -1,5 +1,4 @@
 var Salaries = artifacts.require("./Salaries.sol");
-var SalariesSimple = artifacts.require("./SalariesSimple.sol");
 
 var fs = require('fs')
 
@@ -10,14 +9,10 @@ module.exports = function(deployer, network, accounts) {
   if (network == "development") {
 
       deployer.deploy(Salaries, {from: accounts[0]}).then(function() {
-          deployer.deploy(SalariesSimple, {from: accounts[0]}).then(function() {
 
           var addresses = Salaries.address + "\n"
-                        + SalariesSimple.address
 
         //  backupAddresses(backup_location, 'addresses.txt', addresses.toString())
-
-      })
   })
 
   } else if (network == "kovan") {
