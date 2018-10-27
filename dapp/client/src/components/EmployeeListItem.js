@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Button from './Button'
+import Status from './Status'
 
 class EmployeeListItem extends Component {
   render () {
@@ -15,7 +15,7 @@ class EmployeeListItem extends Component {
             <p className={"employee-address"}>{address}</p>
           </div>
         </div>
-        <Button className={"employee-actions"} active={true} />
+        <Status className={"employee-status"} active={true} />
       </div>
     )
   }
