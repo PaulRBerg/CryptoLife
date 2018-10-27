@@ -1,6 +1,6 @@
 var Web3 = require('web3');
 
-var simpleStorageAbi = require('./contracts/SimpleStorage.js')
+var salariesAbi = require('./contracts/Salaries.js')
 
 var fs = require('fs'), readline = require('readline');
 
@@ -28,34 +28,133 @@ function getContractsAddresses(filePath) {
 
 }
 
-async function set(pubKey, value) {
+async function addEmployee(pubKey, address, name, role) {
 
   if (pubKey == undefined)
     {console.log("Please call with a correct key"); return}
 
   var addresses = getContractsAddresses(addressesPath)
 
-  var storageContract = new web3.eth.Contract(simpleStorageAbi.simpleStorage.abi, addresses[0].toString());
+  var salaries = new web3.eth.Contract(salariesAbi.salaries.abi, addresses[0].toString());
 
-  await storageContract.methods.set(value).send({from: pubKey.toString()}, function(err, result) {
+  await salaries.methods.addEmployee(address, name, role).send({from: pubKey.toString()}, function(err, result) {
 
     if (err != undefined) {console.log(err); return}
 
-    console.log("You set the new value " + value)
+    console.log("You added a new employee")
 
   });
 
 }
 
-async function getValue() {
+async function removeEmployee(pubKey, address) {
+
+  if (pubKey == undefined)
+    {console.log("Please call with a correct key"); return}
 
   var addresses = getContractsAddresses(addressesPath)
 
-  var storageContract = new web3.eth.Contract(simpleStorageAbi.simpleStorage.abi, addresses[0].toString());
+  var salaries = new web3.eth.Contract(salariesAbi.salaries.abi, addresses[0].toString());
+
+  await salaries.methods.removeEmployee(address).send({from: pubKey.toString()}, function(err, result) {
+
+    if (err != undefined) {console.log(err); return}
+
+    console.log("You removed an employee")
+
+  });
+
+}
+
+async function startSalary(pubKey, employee, startBlock, closeBlock, price, interval, msgValue) {
+
+  if (pubKey == undefined)
+    {console.log("Please call with a correct key"); return}
+
+  var addresses = getContractsAddresses(addressesPath)
+
+  var salaries = new web3.eth.Contract(salariesAbi.salaries.abi, addresses[0].toString());
+
+  await salaries.methods.startSalary(employee, startBlock, closeBlock, price, interval)
+    .send({from: pubKey.toString(), value: msgValue}, function(err, result) {
+
+    if (err != undefined) {console.log(err); return}
+
+    console.log("You set a salary for " employee)
+
+  });
+
+}
+
+async function stopSalary(pubKey, employee) {
+
+  if (pubKey == undefined)
+    {console.log("Please call with a correct key"); return}
+
+  var addresses = getContractsAddresses(addressesPath)
+
+  var salaries = new web3.eth.Contract(salariesAbi.salaries.abi, addresses[0].toString());
+
+  await salaries.methods.stopSalary(employee)
+    .send({from: pubKey.toString()}, function(err, result) {
+
+    if (err != undefined) {console.log(err); return}
+
+    console.log("You stopped a salary for " employee)
+
+  });
+
+}
+
+async function redeem(pubKey, employee) {
+
+  if (pubKey == undefined)
+    {console.log("Please call with a correct key"); return}
+
+  var addresses = getContractsAddresses(addressesPath)
+
+  var salaries = new web3.eth.Contract(salariesAbi.salaries.abi, addresses[0].toString());
+
+  await salaries.methods.redeem(employee)
+    .send({from: pubKey.toString()}, function(err, result) {
+
+    if (err != undefined) {console.log(err); return}
+
+    console.log("You redeemed a salary for " employee)
+
+  });
+
+}
+
+async function currentBilling(employee) {
+
+  var addresses = getContractsAddresses(addressesPath)
+
+  var salaries = new web3.eth.Contract(salariesAbi.salaries.abi, addresses[0].toString());
 
   var x
 
-  await storageContract.methods.get().call(function(err, result) {
+  await salaries.methods.currentBilling(employee).call(function(err, result) {
+
+    if (err != undefined) {x = undefined; console.log(err)}
+
+    else x = result
+
+  });
+
+  return x
+
+}
+
+async function stateOf(employee) {
+
+  var addresses = getContractsAddresses(addressesPath)
+
+  var salaries = new web3.eth.Contract(salariesAbi.salaries.abi, addresses[0].toString());
+
+  var x
+
+  await salaries.methods.stateOf(employee).call(function(err, result) {
 
     if (err != undefined) {x = undefined; console.log(err)}
 
@@ -71,7 +170,12 @@ module.exports = {
 
     web3,
     getContractsAddresses,
-    set,
-    getValue
+    stateOf,
+    currentBilling,
+    redeem,
+    stopSalary,
+    startSalary,
+    removeEmployee,
+    addEmployee
 
 }

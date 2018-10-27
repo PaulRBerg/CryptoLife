@@ -226,4 +226,4 @@ contract Salaries is Ownable {
         salaries[employee].balance = 0;
         salaries[employee].state = SalaryState.Finalized;
     }
-}}
+}
