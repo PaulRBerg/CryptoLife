@@ -1,0 +1,22 @@
+{
+  "name": "flipper",
+  "version": "1.0.0",
+  "description": "Client code and contracts for streaming salaries",
+  "main": "truffle-config.js",
+  "repository": "https://github.com/PaulRBerg/CryptoLife.git",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "keywords": [
+    "blockchain"
+  ],
+  "author": "Flipper Team",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "fs": "0.0.1-security"
+  }
+}
