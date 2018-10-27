@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^6.1.0",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "openzeppelin-solidity": "^2.0.0"
   }
 }

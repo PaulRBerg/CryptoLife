@@ -1,4 +1,5 @@
-var SimpleStorage = artifacts.require("./SimpleStorage.sol");
+var Salaries = artifacts.require("./Salaries.sol");
+var SalariesSimple = artifacts.require("./SalariesSimple.sol");
 
 var fs = require('fs')
 
@@ -8,15 +9,16 @@ module.exports = function(deployer, network, accounts) {
 
   if (network == "development") {
 
-    deployer.deploy(SimpleStorage, {from: accounts[0]}).then(function() {
+      deployer.deploy(Salaries, {from: accounts[0]}).then(function() {
+          deployer.deploy(SalariesSimple, {from: accounts[0]}).then(function() {
 
-        var addresses = SimpleStorage.address
+          var addresses = Salaries.address + "\n"
+                        + SalariesSimple.address
 
-        console.log("sadfhg")
+        //  backupAddresses(backup_location, 'addresses.txt', addresses.toString())
 
-      //  backupAddresses(backup_location, 'addresses.txt', addresses.toString())
-
-    })
+      })
+  })
 
   } else if (network == "kovan") {
 
