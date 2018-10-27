@@ -1,4 +1,5 @@
 var Salaries = artifacts.require("./Salaries.sol");
+<<<<<<< HEAD
 
 var fs = require('fs')
 
@@ -39,3 +40,9 @@ module.exports = function(deployer, network, accounts) {
   }
 
 };
+=======
+
+module.exports = function(deployer) {
+	deployer.deploy(Salaries);
+};
+>>>>>>> ad7d1925110ed5203a6be75461736be4fbe14aa1
