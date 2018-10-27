@@ -111,13 +111,26 @@ contract Salaries is Ownable {
     view
     returns (uint256)
     {
+
         Salary memory salary = salaries[employee];
+        
         uint256 start = salary.timeframe.start;
+
         if (checkpointBlock > 0) {
             start = checkpointBlock;
         }
-        uint256 delta = salary.timeframe.stop - start;
+
+        uint256 latestBlock = block.number;
+
+        if (latestBlock > salary.timeframe.stop) {
+
+            latestBlock = salary.timeframe.stop;
+
+        }
+
+        uint256 delta = (latestBlock - start);
         return delta;
+
     }
 
     /**
@@ -158,7 +171,7 @@ contract Salaries is Ownable {
         require(block.number >= salary.timeframe.start, "Continous payment not started yet");
         Salary memory salary = salaries[employee];
         uint256 delta = blockDelta(employee);
-        return (delta / salary.rate.interval) * salary.rate.price;
+        return delta * salary.rate.price;
     }
 
     // @param employee        The address of the employee receiving the salary
@@ -191,7 +204,7 @@ contract Salaries is Ownable {
         require(duration >= 1, "The closing block needs to be higher than the starting block");
         require(duration >= interval, "The total salary duration needs to be higher than the payment interval");
 
-        uint256 funds = (duration / interval) * price;
+        uint256 funds = interval * price;
         require(funds == msg.value, "Funds deposited by the business need to be exact");
 
         address business = msg.sender;
@@ -206,23 +219,29 @@ contract Salaries is Ownable {
         emit SalaryStarted(business, employee);
     }
 
-    // Withdrawing or checkpointing menas that the employee wishes to move the funds into their
+    // Withdrawing or checkpointing means that the employee wishes to move the funds into their
     // actual wallet account
     //
     // @param employee        The address of the employee receiving the salary
     function checkpoint(address employee)
     onlyEmployee(employee)
-    isNonNilSalary(employee)
-    isPaying(employee)
+  //  isNonNilSalary(employee)
+  //  isPaying(employee)
     public
     {
+
+        uint256 funds = currentBilling(employee);
+
+        checkpointBlock = block.number;
+
         Salary memory salary = salaries[employee];
-        uint256 funds = ((checkpointBlock - salary.timeframe.start) / salary.rate.interval) * salary.rate.price;
+
         msg.sender.transfer(funds);
 
         salaries[employee].balance -= funds;
-        checkpointBlock = block.number;
+
         emit SalaryCheckpointed(salary.business, salary.employee, funds);
+
     }
 
     // Employees cannot currently close the salary while it is active,
@@ -258,8 +277,11 @@ contract Salaries is Ownable {
         salaries[employee].state = SalaryState.NonPaying;
         emit SalaryClosed(salary.business, salary.employee);
     }
-<<<<<<< HEAD
+
+    function getRate(address person) public view returns (uint256, uint256) {
+
+        return (salaries[person].rate.price, salaries[person].rate.interval);
+
+    }
+
 }
-=======
-}
->>>>>>> ad7d1925110ed5203a6be75461736be4fbe14aa1
