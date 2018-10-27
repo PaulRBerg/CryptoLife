@@ -80,7 +80,7 @@ async function startSalary(pubKey, employee, startBlock, closeBlock, price, inte
 
     if (err != undefined) {console.log(err); return}
 
-    console.log("You set a salary for " employee)
+    console.log("You set a salary for " + employee)
 
   });
 
@@ -100,7 +100,7 @@ async function stopSalary(pubKey, employee) {
 
     if (err != undefined) {console.log(err); return}
 
-    console.log("You stopped a salary for " employee)
+    console.log("You stopped a salary for " + employee)
 
   });
 
@@ -120,7 +120,7 @@ async function redeem(pubKey, employee) {
 
     if (err != undefined) {console.log(err); return}
 
-    console.log("You redeemed a salary for " employee)
+    console.log("You redeemed a salary for " + employee)
 
   });
 
