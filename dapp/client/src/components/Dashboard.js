@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
 import EmployeeList from './EmployeeList'
+import NavBar from './NavBar'
 
 class Dashboard extends Component {
   render () {
     return (
       <div>
-        <h1>Employee List>
-        <img src={require("search.png")} />
+        <NavBar title="Employee List" icon="search.jpeg"/>
         <EmployeeList />
       </div>
     )
